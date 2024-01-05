@@ -1,10 +1,12 @@
 from langchain.chains import GraphCypherQAChain
+
 # tag::import-prompt-template[]
 from langchain.prompts.prompt import PromptTemplate
+
 # end::import-prompt-template[]
 
-from solutions.llm import llm
-from solutions.graph import graph
+from llm import llm
+from graph import graph
 
 
 # tag::prompt[]
@@ -42,6 +44,8 @@ RETURN
   ) AS pathBetweenPeople
 ```
 
+Do not forget to provide the movies that connect these two people in your final answer.
+
 Schema:
 {schema}
 
@@ -57,9 +61,6 @@ cypher_prompt = PromptTemplate.from_template(CYPHER_GENERATION_TEMPLATE)
 
 # tag::cypher-qa[]
 cypher_qa = GraphCypherQAChain.from_llm(
-    llm,
-    graph=graph,
-    verbose=True,
-    cypher_prompt=cypher_prompt
+    llm, graph=graph, verbose=True, cypher_prompt=cypher_prompt
 )
 # end::cypher-qa[]
